@@ -62,18 +62,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 var common_1 = require("@nestjs/common");
 var auth_dto_1 = require("./dtos/auth.dto");
-var argon = require("argon2");
 var user_schema_1 = require("../schema/user.schema");
 var mongoose_1 = require("mongoose");
 var mongoose_2 = require("@nestjs/mongoose");
 var helper_functions_1 = require("../utils/helper.functions");
+var bcryptjs_1 = require("bcryptjs");
 var AuthService = (function () {
     function AuthService(userModel) {
         this.userModel = userModel;
     }
     AuthService.prototype.login = function (dto, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var user, error_1;
+            var user, passIsValid, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -84,9 +84,10 @@ var AuthService = (function () {
                         if (!user) {
                             return [2, (0, helper_functions_1.responseHandler)(res, common_1.HttpStatus.NOT_FOUND, 'Sorry, no user is found with this email address')];
                         }
-                        return [4, argon.verify(user.password, dto.password)];
+                        return [4, bcryptjs_1.default.compare(dto.password, user.password)];
                     case 2:
-                        if (_a.sent()) {
+                        passIsValid = _a.sent();
+                        if (passIsValid) {
                             return [2, (0, helper_functions_1.responseHandler)(res, common_1.HttpStatus.OK, 'User Login Successfully', user)];
                         }
                         else {
@@ -103,31 +104,28 @@ var AuthService = (function () {
     };
     AuthService.prototype.signup = function (dto, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var hashPass, newUser, user, _a, password, returnUser, error_2;
+            var newUser, user, _a, password, returnUser, error_2;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        _b.trys.push([0, 4, , 5]);
-                        return [4, argon.hash(dto.password)];
-                    case 1:
-                        hashPass = _b.sent();
-                        dto.password = hashPass;
-                        dto.email = dto.email.toLowerCase();
+                        _b.trys.push([0, 3, , 4]);
+                        dto.password = bcryptjs_1.default.hashSync(dto.password, 10),
+                            dto.email = dto.email.toLowerCase();
                         return [4, this.userModel.create(dto)];
-                    case 2:
+                    case 1:
                         newUser = _b.sent();
                         return [4, newUser.save()];
-                    case 3:
+                    case 2:
                         user = _b.sent();
                         _a = user._doc, password = _a.password, returnUser = __rest(_a, ["password"]);
                         return [2, (0, helper_functions_1.responseHandler)(res, common_1.HttpStatus.OK, 'User created successfully', returnUser)];
-                    case 4:
+                    case 3:
                         error_2 = _b.sent();
                         if (error_2.message.includes("duplicate")) {
                             return [2, (0, helper_functions_1.responseHandler)(res, common_1.HttpStatus.CONFLICT, 'User with this email already exists', null, error_2.message)];
                         }
                         return [2, (0, helper_functions_1.responseHandler)(res, common_1.HttpStatus.INTERNAL_SERVER_ERROR, 'Error in user signup', null, error_2.message)];
-                    case 5: return [2];
+                    case 4: return [2];
                 }
             });
         });

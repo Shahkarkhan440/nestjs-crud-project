@@ -2,11 +2,12 @@
 /* eslint-disable prettier/prettier */
 import { HttpStatus, HttpException, Injectable, Response, Res, Logger } from '@nestjs/common';
 import { AuthDTO, LoginDTO } from './dtos/auth.dto';
-import * as argon from 'argon2';
 import { User } from 'src/schema/user.schema';
 import { Document, Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { responseHandler } from '../utils/helper.functions'
+import bcrypt from 'bcryptjs';
+
 
 
 @Injectable({})
@@ -22,7 +23,8 @@ export class AuthService {
       if (!user) {
         return responseHandler(res, HttpStatus.NOT_FOUND, 'Sorry, no user is found with this email address')
       }
-      if (await argon.verify(user.password, dto.password)) {
+      let passIsValid = await bcrypt.compare(dto.password, user.password)
+      if (passIsValid) {
         return responseHandler(res, HttpStatus.OK, 'User Login Successfully', user)
       } else {
         return responseHandler(res, HttpStatus.BAD_REQUEST, 'Sorry, Incorrect Password Entered')
@@ -35,8 +37,7 @@ export class AuthService {
   //register function
   async signup(dto: AuthDTO, @Res() res: Response): Promise<object> {
     try {
-      const hashPass = await argon.hash(dto.password);
-      dto.password = hashPass
+      dto.password = bcrypt.hashSync(dto.password, 10),
       dto.email = dto.email.toLowerCase()
       const newUser = await this.userModel.create(dto)
       const user: any = await newUser.save();

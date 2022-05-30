@@ -2,11 +2,11 @@
 /* eslint-disable prettier/prettier */
 import { HttpStatus, HttpException, Injectable, Response, Res, Logger } from '@nestjs/common';
 import { setPasswordDTO } from '../user/dtos/user.dto';
-import * as argon from 'argon2';
 import { User } from 'src/schema/user.schema';
 import { Document, Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { responseHandler } from '../utils/helper.functions'
+import bcrypt from 'bcryptjs'
 
 @Injectable({})
 export class UserService {
@@ -17,7 +17,9 @@ export class UserService {
             if (!getUser) {
                 return responseHandler(res, HttpStatus.NOT_FOUND, 'Sorry, no user is found with this email address')
             }
-            if (await argon.verify(getUser.password, dto.currentPassword)) {
+            let passIsValid = await bcrypt.compare(dto.currentPassword, getUser.password)
+
+            if (passIsValid) {
                 const updatedUser: object = await this.userModel.findOneAndUpdate({ _id: getUser._id }, { $set: { password: dto.password } })
                 if (updatedUser['modifiedCount'] == 0) {
                     return responseHandler(res, HttpStatus.NOT_MODIFIED, 'Sorry, please try again later')

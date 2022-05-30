@@ -51,18 +51,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 var common_1 = require("@nestjs/common");
 var user_dto_1 = require("../user/dtos/user.dto");
-var argon = require("argon2");
 var user_schema_1 = require("../schema/user.schema");
 var mongoose_1 = require("mongoose");
 var mongoose_2 = require("@nestjs/mongoose");
 var helper_functions_1 = require("../utils/helper.functions");
+var bcryptjs_1 = require("bcryptjs");
 var UserService = (function () {
     function UserService(userModel) {
         this.userModel = userModel;
     }
     UserService.prototype.updatePassword = function (dto, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var getUser, updatedUser, error_1;
+            var getUser, passIsValid, updatedUser, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -73,9 +73,10 @@ var UserService = (function () {
                         if (!getUser) {
                             return [2, (0, helper_functions_1.responseHandler)(res, common_1.HttpStatus.NOT_FOUND, 'Sorry, no user is found with this email address')];
                         }
-                        return [4, argon.verify(getUser.password, dto.currentPassword)];
+                        return [4, bcryptjs_1.default.compare(dto.currentPassword, getUser.password)];
                     case 2:
-                        if (!_a.sent()) return [3, 4];
+                        passIsValid = _a.sent();
+                        if (!passIsValid) return [3, 4];
                         return [4, this.userModel.findOneAndUpdate({ _id: getUser._id }, { $set: { password: dto.password } })];
                     case 3:
                         updatedUser = _a.sent();
