@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/ban-types */
-
 export function responseHandler(res, status: Number, message: String, data?: Object, error?: String,): object {
     if (status === 200 || status === 201) {
         return res.status(status).json({ success: true, statusCode: status, message: message, data: data ? data : null });

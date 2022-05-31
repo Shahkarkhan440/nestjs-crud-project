@@ -7,31 +7,29 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LogsMiddleware = void 0;
-var common_1 = require("@nestjs/common");
-var LogsMiddleware = (function () {
-    function LogsMiddleware() {
+const common_1 = require("@nestjs/common");
+let LogsMiddleware = class LogsMiddleware {
+    constructor() {
         this.logger = new common_1.Logger('HTTP');
     }
-    LogsMiddleware.prototype.use = function (request, response, next) {
-        var _this = this;
-        response.on('finish', function () {
-            var method = request.method, originalUrl = request.originalUrl;
-            var statusCode = response.statusCode, statusMessage = response.statusMessage;
-            var message = "".concat(method, " ").concat(originalUrl, " ").concat(statusCode, " ").concat(statusMessage);
+    use(request, response, next) {
+        response.on('finish', () => {
+            const { method, originalUrl } = request;
+            const { statusCode, statusMessage } = response;
+            const message = `${method} ${originalUrl} ${statusCode} ${statusMessage}`;
             if (statusCode >= 500) {
-                return _this.logger.error(message);
+                return this.logger.error(message);
             }
             if (statusCode >= 400) {
-                return _this.logger.warn(message);
+                return this.logger.warn(message);
             }
-            return _this.logger.log(message);
+            return this.logger.log(message);
         });
         next();
-    };
-    LogsMiddleware = __decorate([
-        (0, common_1.Injectable)()
-    ], LogsMiddleware);
-    return LogsMiddleware;
-}());
+    }
+};
+LogsMiddleware = __decorate([
+    (0, common_1.Injectable)()
+], LogsMiddleware);
 exports.LogsMiddleware = LogsMiddleware;
 //# sourceMappingURL=logger.middleware.js.map

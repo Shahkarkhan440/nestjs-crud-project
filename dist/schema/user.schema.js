@@ -10,38 +10,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserSchema = exports.User = void 0;
-var mongoose_1 = require("@nestjs/mongoose");
+const mongoose_1 = require("@nestjs/mongoose");
 var userStatuses;
 (function (userStatuses) {
     userStatuses[userStatuses["active"] = 0] = "active";
     userStatuses[userStatuses["blocked"] = 1] = "blocked";
 })(userStatuses || (userStatuses = {}));
-var User = (function () {
-    function User() {
-    }
-    __decorate([
-        (0, mongoose_1.Prop)({ required: true }),
-        __metadata("design:type", String)
-    ], User.prototype, "name", void 0);
-    __decorate([
-        (0, mongoose_1.Prop)({ unique: true, required: true }),
-        __metadata("design:type", String)
-    ], User.prototype, "email", void 0);
-    __decorate([
-        (0, mongoose_1.Prop)({ required: true }),
-        __metadata("design:type", String)
-    ], User.prototype, "password", void 0);
-    __decorate([
-        (0, mongoose_1.Prop)({ default: 'active' }),
-        __metadata("design:type", String)
-    ], User.prototype, "status", void 0);
-    User = __decorate([
-        (0, mongoose_1.Schema)({
-            timestamps: true,
-        })
-    ], User);
-    return User;
-}());
+let User = class User {
+};
+__decorate([
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", String)
+], User.prototype, "name", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ unique: true, required: true }),
+    __metadata("design:type", String)
+], User.prototype, "email", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", String)
+], User.prototype, "password", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ default: 'active' }),
+    __metadata("design:type", String)
+], User.prototype, "status", void 0);
+User = __decorate([
+    (0, mongoose_1.Schema)({
+        timestamps: true,
+    })
+], User);
 exports.User = User;
 exports.UserSchema = mongoose_1.SchemaFactory.createForClass(User);
 //# sourceMappingURL=user.schema.js.map

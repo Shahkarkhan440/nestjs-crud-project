@@ -10,33 +10,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPasswordDTO = void 0;
-var class_validator_1 = require("class-validator");
-var setPasswordDTO = (function () {
-    function setPasswordDTO() {
-    }
-    __decorate([
-        (0, class_validator_1.IsEmail)(),
-        (0, class_validator_1.IsNotEmpty)(),
-        __metadata("design:type", String)
-    ], setPasswordDTO.prototype, "email", void 0);
-    __decorate([
-        (0, class_validator_1.IsString)(),
-        (0, class_validator_1.IsNotEmpty)(),
-        __metadata("design:type", String)
-    ], setPasswordDTO.prototype, "currentPassword", void 0);
-    __decorate([
-        (0, class_validator_1.IsString)(),
-        (0, class_validator_1.IsNotEmpty)(),
-        (0, class_validator_1.Length)(8),
-        __metadata("design:type", String)
-    ], setPasswordDTO.prototype, "password", void 0);
-    __decorate([
-        (0, class_validator_1.IsString)(),
-        (0, class_validator_1.IsNotEmpty)(),
-        (0, class_validator_1.Length)(8),
-        __metadata("design:type", String)
-    ], setPasswordDTO.prototype, "confirmPassword", void 0);
-    return setPasswordDTO;
-}());
+const class_validator_1 = require("class-validator");
+class setPasswordDTO {
+}
+__decorate([
+    (0, class_validator_1.IsEmail)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], setPasswordDTO.prototype, "email", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], setPasswordDTO.prototype, "currentPassword", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.Length)(8),
+    __metadata("design:type", String)
+], setPasswordDTO.prototype, "password", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.Length)(8),
+    __metadata("design:type", String)
+], setPasswordDTO.prototype, "confirmPassword", void 0);
 exports.setPasswordDTO = setPasswordDTO;
 //# sourceMappingURL=user.dto.js.map

@@ -23,7 +23,6 @@ export class LoginDTO {
     @IsNotEmpty()
     email: string;
 
-    @IsString()
     @IsNotEmpty()
     password: string;
 }

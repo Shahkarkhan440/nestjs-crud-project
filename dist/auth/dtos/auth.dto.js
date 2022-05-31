@@ -10,44 +10,37 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoginDTO = exports.AuthDTO = void 0;
-var class_validator_1 = require("class-validator");
-var AuthDTO = (function () {
-    function AuthDTO() {
-    }
-    __decorate([
-        (0, class_validator_1.IsString)(),
-        (0, class_validator_1.IsNotEmpty)(),
-        (0, class_validator_1.MaxLength)(30),
-        __metadata("design:type", String)
-    ], AuthDTO.prototype, "name", void 0);
-    __decorate([
-        (0, class_validator_1.IsEmail)(),
-        (0, class_validator_1.IsNotEmpty)(),
-        __metadata("design:type", String)
-    ], AuthDTO.prototype, "email", void 0);
-    __decorate([
-        (0, class_validator_1.IsString)(),
-        (0, class_validator_1.IsNotEmpty)(),
-        (0, class_validator_1.Length)(8),
-        __metadata("design:type", String)
-    ], AuthDTO.prototype, "password", void 0);
-    return AuthDTO;
-}());
+const class_validator_1 = require("class-validator");
+class AuthDTO {
+}
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.MaxLength)(30),
+    __metadata("design:type", String)
+], AuthDTO.prototype, "name", void 0);
+__decorate([
+    (0, class_validator_1.IsEmail)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], AuthDTO.prototype, "email", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.Length)(8),
+    __metadata("design:type", String)
+], AuthDTO.prototype, "password", void 0);
 exports.AuthDTO = AuthDTO;
-var LoginDTO = (function () {
-    function LoginDTO() {
-    }
-    __decorate([
-        (0, class_validator_1.IsEmail)(),
-        (0, class_validator_1.IsNotEmpty)(),
-        __metadata("design:type", String)
-    ], LoginDTO.prototype, "email", void 0);
-    __decorate([
-        (0, class_validator_1.IsString)(),
-        (0, class_validator_1.IsNotEmpty)(),
-        __metadata("design:type", String)
-    ], LoginDTO.prototype, "password", void 0);
-    return LoginDTO;
-}());
+class LoginDTO {
+}
+__decorate([
+    (0, class_validator_1.IsEmail)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], LoginDTO.prototype, "email", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], LoginDTO.prototype, "password", void 0);
 exports.LoginDTO = LoginDTO;
 //# sourceMappingURL=auth.dto.js.map

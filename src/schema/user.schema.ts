@@ -25,7 +25,7 @@ export class User {
     @Prop({ default: 'active' })
     status: string
     enum: userStatuses
-
+   
 }
 export const UserSchema = SchemaFactory.createForClass(User)
 
