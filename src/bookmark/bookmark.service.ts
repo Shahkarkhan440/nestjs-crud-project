@@ -1,7 +1,6 @@
 import { HttpStatus, Injectable, Res, Response } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model  } from 'mongoose';
- 
 import { userObject } from 'src/common/types';
 import { Bookmark } from 'src/schema/bookmark.schema';
 import { responseHandler } from 'src/utils/helper.functions';
@@ -23,7 +22,7 @@ public isValidObjectId(id: string){
     return false;
 }
 
-async addBookmark(dto: bookmarkDTO , user: userObject, @Res() res: Response) : Promise<object>{
+async addBookmark(dto: bookmarkDTO , user: userObject, @Res() res: Response) : Promise<object> {
     try {
         let data  = {...dto, user: {  name:user.name, email: user.email, userId: user.sub } }
         const getDuplicate = await this.bookmarkModel.findOne({ url: dto.url, "user.userId": user.sub }) 
@@ -35,7 +34,7 @@ async addBookmark(dto: bookmarkDTO , user: userObject, @Res() res: Response) : P
     }
 }
 
-async deleteBookmark(dto: genericBookmarkDTO , user: userObject, @Res() res: Response) {
+async deleteBookmark(dto: genericBookmarkDTO , user: userObject, @Res() res: Response)  : Promise<object>{
     try {
         if(!this.isValidObjectId(dto.bookmarkID)) return responseHandler(res, HttpStatus.NOT_ACCEPTABLE, 'Invalid Id Format Provided', null)
         const getBookmark=  await this.bookmarkModel.findOneAndDelete({_id:dto.bookmarkID, "user.userId": user.sub })
@@ -46,7 +45,7 @@ async deleteBookmark(dto: genericBookmarkDTO , user: userObject, @Res() res: Res
     }
 }
 
-async viewBookmarkDetails(bookmarkID:string, @Res() res:Response) {
+async viewBookmarkDetails(bookmarkID:string, @Res() res:Response) : Promise<object>{
     try {
         if(!this.isValidObjectId(bookmarkID)) return responseHandler(res, HttpStatus.NOT_ACCEPTABLE, 'Invalid Id Format Provided', null)
         const bookmark=  await this.bookmarkModel.findById(bookmarkID)
