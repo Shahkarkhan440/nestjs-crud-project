@@ -11,13 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPasswordDTO = void 0;
 const class_validator_1 = require("class-validator");
+const match_passwords_1 = require("../../common/decorators/match.passwords");
 class setPasswordDTO {
 }
 __decorate([
-    (0, class_validator_1.IsEmail)(),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
-], setPasswordDTO.prototype, "email", void 0);
+], setPasswordDTO.prototype, "sub", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
@@ -33,6 +33,7 @@ __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.Length)(8),
+    (0, match_passwords_1.Match)('password'),
     __metadata("design:type", String)
 ], setPasswordDTO.prototype, "confirmPassword", void 0);
 exports.setPasswordDTO = setPasswordDTO;

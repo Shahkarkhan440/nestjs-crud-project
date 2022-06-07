@@ -1,5 +1,5 @@
 export declare class setPasswordDTO {
-    email: string;
+    sub: string;
     currentPassword: string;
     password: string;
     confirmPassword: string;

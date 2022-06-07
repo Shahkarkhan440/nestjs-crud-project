@@ -26,9 +26,6 @@ let AuthController = class AuthController {
     login(dto, res) {
         return this.authService.login(dto, res);
     }
-    logout() {
-        return this.authService.logout();
-    }
 };
 __decorate([
     (0, common_1.Post)('signup'),
@@ -46,12 +43,6 @@ __decorate([
     __metadata("design:paramtypes", [auth_dto_1.LoginDTO, Object]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "login", null);
-__decorate([
-    (0, common_1.Post)('logout'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], AuthController.prototype, "logout", null);
 AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])

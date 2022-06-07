@@ -53,12 +53,15 @@ let AuthService = class AuthService {
                 if (!user) {
                     return (0, helper_functions_1.responseHandler)(res, common_1.HttpStatus.NOT_FOUND, 'Sorry, no user is found with this email address');
                 }
+                if (user.status === helper_functions_1.userAccStatus.blocked) {
+                    return (0, helper_functions_1.responseHandler)(res, common_1.HttpStatus.FORBIDDEN, 'Sorry, your account is blocked');
+                }
                 let passIsValid = yield bcrypt.compare(dto.password, user.password);
                 if (!passIsValid) {
                     return (0, helper_functions_1.responseHandler)(res, common_1.HttpStatus.BAD_REQUEST, 'Sorry, Incorrect Password Entered');
                 }
                 const tokens = yield this.createTokens(user.id, user.email);
-                let _a = user._doc, { password } = _a, returnUser = __rest(_a, ["password"]);
+                let _a = user.toJSON(), { password } = _a, returnUser = __rest(_a, ["password"]);
                 let data = Object.assign(Object.assign({}, returnUser), { accessToken: tokens.refresh_token, refreshToken: tokens.refresh_token });
                 return (0, helper_functions_1.responseHandler)(res, common_1.HttpStatus.OK, 'User Login Successfully', data);
             }
@@ -74,7 +77,7 @@ let AuthService = class AuthService {
                     dto.email = dto.email.toLowerCase();
                 const newUser = yield this.userModel.create(dto);
                 const user = yield newUser.save();
-                const _a = user._doc, { password } = _a, returnUser = __rest(_a, ["password"]);
+                const _a = user.toJSON(), { password } = _a, returnUser = __rest(_a, ["password"]);
                 return (0, helper_functions_1.responseHandler)(res, common_1.HttpStatus.OK, 'User created successfully', returnUser);
             }
             catch (error) {
@@ -83,10 +86,6 @@ let AuthService = class AuthService {
                 }
                 return (0, helper_functions_1.responseHandler)(res, common_1.HttpStatus.INTERNAL_SERVER_ERROR, 'Error in user signup', null, error.message);
             }
-        });
-    }
-    logout() {
-        return __awaiter(this, void 0, void 0, function* () {
         });
     }
     createTokens(userId, email) {
@@ -116,7 +115,7 @@ let AuthService = class AuthService {
     updateUserRefreshToken(userId, refreshToken) {
         return __awaiter(this, void 0, void 0, function* () {
             const refreshTokenHash = bcrypt.hashSync(refreshToken, 10);
-            const user = yield this.userModel.updateOne({ id: userId }, { $set: { refreshToken: refreshTokenHash } });
+            yield this.userModel.updateOne({ id: userId }, { $set: { refreshToken: refreshTokenHash } });
         });
     }
 };

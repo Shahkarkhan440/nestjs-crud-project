@@ -8,7 +8,6 @@ export declare class AuthService {
     constructor(userModel: Model<User>, jwtService: JwtService);
     login(dto: LoginDTO, res: Response): Promise<object>;
     signup(dto: AuthDTO, res: Response): Promise<object>;
-    logout(): Promise<void>;
     createTokens(userId: number, email: string): Promise<{
         access_token: string;
         refresh_token: string;

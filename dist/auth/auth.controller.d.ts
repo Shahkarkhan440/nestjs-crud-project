@@ -5,5 +5,4 @@ export declare class AuthController {
     constructor(authService: AuthService);
     signup(dto: AuthDTO, res: Response): Promise<object>;
     login(dto: LoginDTO, res: Response): Promise<object>;
-    logout(): Promise<void>;
 }

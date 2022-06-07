@@ -6,6 +6,14 @@ export function responseHandler(res, status: Number, message: String, data?: Obj
     } else if (process.env.NODE_ENV === 'dev') {
         return res.status(status).json({ success: false, statusCode: status, message: message, data: null, error: error });
     } else {
-        return res.status(status).json({ success: false, statusCode: status, message: message, data: null, error: error });
+        return res.status(status).json({ success: false, statusCode: status, message: message, data: null });
     }
 }
+
+export const userAccStatus= Object.freeze({
+    active: 'active',
+    blocked:'blocked',
+    pending: 'pending'
+})
+
+

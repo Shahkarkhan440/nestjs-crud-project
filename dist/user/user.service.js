@@ -28,29 +28,27 @@ const user_schema_1 = require("../schema/user.schema");
 const mongoose_1 = require("mongoose");
 const mongoose_2 = require("@nestjs/mongoose");
 const helper_functions_1 = require("../utils/helper.functions");
-const bcryptjs_1 = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 let UserService = class UserService {
     constructor(userModel) {
         this.userModel = userModel;
     }
-    updatePassword(dto, res) {
+    updatePassword(dto, user, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const getUser = yield this.userModel.findOne({ email: { $regex: dto.email, $options: 'i' } });
+                const getUser = yield this.userModel.findOne({ _id: user.sub, status: helper_functions_1.userAccStatus.active });
                 if (!getUser) {
                     return (0, helper_functions_1.responseHandler)(res, common_1.HttpStatus.NOT_FOUND, 'Sorry, no user is found with this email address');
                 }
-                let passIsValid = yield bcryptjs_1.default.compare(dto.currentPassword, getUser.password);
-                if (passIsValid) {
-                    const updatedUser = yield this.userModel.findOneAndUpdate({ _id: getUser._id }, { $set: { password: dto.password } });
-                    if (updatedUser['modifiedCount'] == 0) {
-                        return (0, helper_functions_1.responseHandler)(res, common_1.HttpStatus.NOT_MODIFIED, 'Sorry, please try again later');
-                    }
-                    return (0, helper_functions_1.responseHandler)(res, common_1.HttpStatus.OK, 'User password updated successfully');
+                let passIsValid = yield bcrypt.compare(dto.currentPassword, getUser.password);
+                if (!passIsValid) {
+                    return (0, helper_functions_1.responseHandler)(res, common_1.HttpStatus.BAD_REQUEST, 'Incorrect Current Password');
                 }
-                else {
-                    return (0, helper_functions_1.responseHandler)(res, common_1.HttpStatus.BAD_REQUEST, 'Invalid Current Password');
+                const updatedUser = yield this.userModel.findOneAndUpdate({ _id: getUser._id }, { $set: { password: dto.password } });
+                if (updatedUser['modifiedCount'] == 0) {
+                    return (0, helper_functions_1.responseHandler)(res, common_1.HttpStatus.NOT_MODIFIED, 'Sorry, please try again later');
                 }
+                return (0, helper_functions_1.responseHandler)(res, common_1.HttpStatus.OK, 'User password updated successfully');
             }
             catch (error) {
                 return (0, helper_functions_1.responseHandler)(res, common_1.HttpStatus.INTERNAL_SERVER_ERROR, 'Error in user password update', null, error.message);
@@ -59,9 +57,9 @@ let UserService = class UserService {
     }
 };
 __decorate([
-    __param(1, (0, common_1.Res)()),
+    __param(2, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [user_dto_1.setPasswordDTO, Object]),
+    __metadata("design:paramtypes", [user_dto_1.setPasswordDTO, Object, Object]),
     __metadata("design:returntype", Promise)
 ], UserService.prototype, "updatePassword", null);
 UserService = __decorate([

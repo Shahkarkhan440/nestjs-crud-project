@@ -17,9 +17,4 @@ export class AuthController {
     return  this.authService.login(dto, res);
   }
 
-  @Post('logout')
-  logout(){
-    return this.authService.logout()
-  }
-
 }
