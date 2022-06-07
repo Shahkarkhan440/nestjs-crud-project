@@ -23,26 +23,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
-const passport_1 = require("@nestjs/passport");
+const get_req_user_1 = require("../common/decorators/get.req.user");
 const user_dto_1 = require("../user/dtos/user.dto");
 const user_service_1 = require("../user/user.service");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
     }
-    updatePassword(dto, res, req) {
+    updatePassword(dto, res, user) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = req['user'];
             return yield this.userService.updatePassword(dto, user, res);
         });
     }
 };
 __decorate([
-    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
     (0, common_1.Post)('update-password'),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Res)()),
-    __param(2, (0, common_1.Req)()),
+    __param(2, (0, get_req_user_1.getRequestUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_dto_1.setPasswordDTO, Object, Object]),
     __metadata("design:returntype", Promise)

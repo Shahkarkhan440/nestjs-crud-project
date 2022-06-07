@@ -6,17 +6,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BookmarkModule = void 0;
+exports.BookmarkController = void 0;
 const common_1 = require("@nestjs/common");
-const bookmark_controller_1 = require("./bookmark.controller");
-const bookmark_service_1 = require("./bookmark.service");
-let BookmarkModule = class BookmarkModule {
+let BookmarkController = class BookmarkController {
 };
-BookmarkModule = __decorate([
-    (0, common_1.Module)({
-        controllers: [bookmark_controller_1.BookmarkController],
-        providers: [bookmark_service_1.BookmarkService]
-    })
-], BookmarkModule);
-exports.BookmarkModule = BookmarkModule;
-//# sourceMappingURL=bookmark.module.js.map
+BookmarkController = __decorate([
+    (0, common_1.Controller)('bookmark')
+], BookmarkController);
+exports.BookmarkController = BookmarkController;
+//# sourceMappingURL=bookmark.controller.js.map

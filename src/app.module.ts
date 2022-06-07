@@ -5,6 +5,8 @@ import { BookmarkModule } from './bookmark/bookmark.module';
 import { LogsMiddleware } from './midllewares/logger.middleware';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
+import { AccessTokenGuard } from './common/guards/access_token.gaurd';
 
 @Module({
   imports: [
@@ -14,6 +16,12 @@ import { ConfigModule } from '@nestjs/config';
     MongooseModule.forRoot('mongodb://localhost:27017/bookmark'),
     ConfigModule.forRoot(),
   ],
+  providers:[
+    {
+      provide: APP_GUARD,
+      useClass: AccessTokenGuard
+    }
+  ]
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

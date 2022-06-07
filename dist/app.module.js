@@ -14,6 +14,8 @@ const bookmark_module_1 = require("./bookmark/bookmark.module");
 const logger_middleware_1 = require("./midllewares/logger.middleware");
 const mongoose_1 = require("@nestjs/mongoose");
 const config_1 = require("@nestjs/config");
+const core_1 = require("@nestjs/core");
+const access_token_gaurd_1 = require("./common/guards/access_token.gaurd");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer.apply(logger_middleware_1.LogsMiddleware).forRoutes('*');
@@ -28,6 +30,12 @@ AppModule = __decorate([
             mongoose_1.MongooseModule.forRoot('mongodb://localhost:27017/bookmark'),
             config_1.ConfigModule.forRoot(),
         ],
+        providers: [
+            {
+                provide: core_1.APP_GUARD,
+                useClass: access_token_gaurd_1.AccessTokenGuard
+            }
+        ]
     })
 ], AppModule);
 exports.AppModule = AppModule;
