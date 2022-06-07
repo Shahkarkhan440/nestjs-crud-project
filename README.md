@@ -22,6 +22,19 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
+## Things Covered
+
+- Project Structuring 
+- Authentication Using Jwt/Passport
+- Middlewares
+- Decorators
+- Types
+- Guards
+- Schemas
+- MongoDB
+- BASIC CRUD
+- More things to Implement...
+
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
