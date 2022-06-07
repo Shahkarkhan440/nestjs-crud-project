@@ -9,36 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserSchema = exports.User = void 0;
-const mongoose_1 = require("@nestjs/mongoose");
-var userStatuses;
-(function (userStatuses) {
-    userStatuses[userStatuses["active"] = 0] = "active";
-    userStatuses[userStatuses["blocked"] = 1] = "blocked";
-})(userStatuses || (userStatuses = {}));
-let User = class User {
-};
+exports.bookmarkDTO = void 0;
+const class_validator_1 = require("class-validator");
+class bookmarkDTO {
+}
 __decorate([
-    (0, mongoose_1.Prop)({ required: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], User.prototype, "name", void 0);
+], bookmarkDTO.prototype, "name", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ unique: true, required: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], User.prototype, "email", void 0);
+], bookmarkDTO.prototype, "url", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ required: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], User.prototype, "password", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ default: userStatuses.active }),
-    __metadata("design:type", String)
-], User.prototype, "status", void 0);
-User = __decorate([
-    (0, mongoose_1.Schema)({
-        timestamps: true,
-    })
-], User);
-exports.User = User;
-exports.UserSchema = mongoose_1.SchemaFactory.createForClass(User);
-//# sourceMappingURL=user.schema.js.map
+], bookmarkDTO.prototype, "category", void 0);
+exports.bookmarkDTO = bookmarkDTO;
+//# sourceMappingURL=add.bookmark.js.map

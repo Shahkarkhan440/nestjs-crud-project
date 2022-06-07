@@ -11,15 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
@@ -30,20 +21,18 @@ let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
     }
-    updatePassword(dto, res, user) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield this.userService.updatePassword(dto, user, res);
-        });
+    updatePassword(dto, user, res) {
+        return this.userService.updatePassword(dto, user, res);
     }
 };
 __decorate([
     (0, common_1.Post)('update-password'),
     __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.Res)()),
-    __param(2, (0, get_req_user_1.getRequestUser)()),
+    __param(1, (0, get_req_user_1.getRequestUser)()),
+    __param(2, (0, common_1.Res)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_dto_1.setPasswordDTO, Object, Object]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], UserController.prototype, "updatePassword", null);
 UserController = __decorate([
     (0, common_1.Controller)('user'),

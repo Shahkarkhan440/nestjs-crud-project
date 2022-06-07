@@ -10,14 +10,15 @@ import { UserService } from '../user/user.service';
 
 @Controller('user')
 export class UserController {
+
     constructor(private readonly userService: UserService) { }
 
     
    // @UseGuards(AuthGuard('jwt')) //this is built-in jwt guard that we can use to protect the route. but we use global auth for all routes
    @Post('update-password')
-    async updatePassword(@Body() dto: setPasswordDTO, @Res() res: Response, @getRequestUser() user: userObject) {
+      updatePassword(@Body() dto: setPasswordDTO,  @getRequestUser() user: userObject, @Res() res: Response) {
         // @getRequestUser() user: userObject   ****** This decorator use in this route get the current user info from req
-        return await this.userService.updatePassword(dto, user, res,);
+        return this.userService.updatePassword(dto, user, res);
     }
 
     //without using decorator the same above function using Request normal to get current user

@@ -14,7 +14,6 @@ export class UserService {
     constructor(@InjectModel(User.name) private readonly userModel: Model<User>) { }
     async updatePassword(dto: setPasswordDTO, user: userObject, @Res() res: Response): Promise<object> {
         try { 
-
             const getUser = await this.userModel.findOne({ _id: user.sub, status: userAccStatus.active })
             if (!getUser) {
                 return responseHandler(res, HttpStatus.NOT_FOUND, 'Sorry, no user is found with this email address')

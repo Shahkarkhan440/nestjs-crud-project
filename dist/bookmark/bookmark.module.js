@@ -8,12 +8,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BookmarkModule = void 0;
 const common_1 = require("@nestjs/common");
+const mongoose_1 = require("@nestjs/mongoose");
+const bookmark_schema_1 = require("../schema/bookmark.schema");
 const bookmark_controller_1 = require("./bookmark.controller");
 const bookmark_service_1 = require("./bookmark.service");
 let BookmarkModule = class BookmarkModule {
 };
 BookmarkModule = __decorate([
     (0, common_1.Module)({
+        imports: [
+            mongoose_1.MongooseModule.forFeature([{ name: bookmark_schema_1.Bookmark.name, schema: bookmark_schema_1.BookmarkSchema }])
+        ],
         controllers: [bookmark_controller_1.BookmarkController],
         providers: [bookmark_service_1.BookmarkService]
     })

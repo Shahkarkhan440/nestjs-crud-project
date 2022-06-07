@@ -22,7 +22,7 @@ export class User {
     @Prop({ required: true })
     password: string
 
-    @Prop({ default: 'active' })
+    @Prop({ default: userStatuses.active })
     status: string
     enum: userStatuses
    
